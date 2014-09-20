@@ -14,7 +14,7 @@ Description
 
 *Tools to facilitate application development for Django*
 
-This console utility allows for those who have more than one Django reusable application to maintain.
+Console utility for those who have more than one Django reusable application to maintain.
 
 It allows certain actions to be done in batch mode over all you apps.
 
@@ -49,7 +49,9 @@ How to start
 
 3. Symlink your apps into ``apps`` directory (was created by step 2 in your current directory).
 
-    E.g.: ``ln -s /home/idle/dev/django-sitetree/sitetree /home/idle/dev/dj_workspace/apps/sitetree``
+    Example:
+
+    ``ln -s /home/idle/dev/django-sitetree/sitetree /home/idle/dev/dj_workspace/apps/sitetree``
 
     Notice, that symlinked is a directory containing *models.py* (not *setup.py*).
 
@@ -62,15 +64,15 @@ Use **add_migrations** command.
 
 * Relocate old South migrations into *south_migrations* and create new migrations in *migrations*:
 
-  ``> django-dev add_migrations --relocate_south``.
+  ``> django-dev add_migrations --relocate_south``
 
 * Create/update migrations both for South and Django 1.7:
 
-  ``> django-dev add_migrations``.
+  ``> django-dev add_migrations``
 
 * Create/update migrations for certain apps:
 
-  ``> django-dev add_migrations --apps sitecats siteflags``.
+  ``> django-dev add_migrations --apps sitecats siteflags``
 
 
 
@@ -81,15 +83,15 @@ Use **make_trans** command.
 
 * Update existing .mo and .po files for every locale available in app:
 
-  ``> django-dev make_trans``.
+  ``> django-dev make_trans``
 
 * Update/create .mo and .po files for certain locales:
 
-  ``> django-dev make_trans ru en``.
+  ``> django-dev make_trans ru en``
 
 * Update/create .mo and .po files for certain apps:
 
-  ``> django-dev make_trans ru --apps sitetree sitegate``.
+  ``> django-dev make_trans ru --apps sitetree sitegate``
 
 
 

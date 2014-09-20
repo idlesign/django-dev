@@ -16,11 +16,6 @@ try:
 except ImportError:
     import ConfigParser as configparser
 
-try:
-    input = raw_input
-except NameError:
-    pass
-
 from . import VERSION
 
 
@@ -384,18 +379,18 @@ def main():
     arg_parser.add_argument('--debug', help='Show debug messages while processing', action='store_true')
 
     arg_parser_apps = argparse.ArgumentParser(add_help=False)
-    arg_parser_apps.add_argument('--apps', nargs='+', help='Whitespace-separated list of application names.')
+    arg_parser_apps.add_argument('--apps', nargs='+', help='Whitespace-separated list of applications names. Example: sitecats, siteflags.')
 
     sub_parsers = arg_parser.add_subparsers(dest='subparser_name')
-    sub_parsers.add_parser('bootstrap', help='Creates a basic django-dev directory structure in current directory.')
+    sub_parsers.add_parser('bootstrap', help='Creates a basic django-dev directory structure in a current directory.')
     sub_parsers.add_parser('list_apps', help='Prints out currently available applications.')
     sub_parsers.add_parser('list_venvs', help='Prints out currently available virtual environments.')
 
     sub_parser_add_migrations = sub_parsers.add_parser('add_migrations', help='Adds both South and Django 1.7+ migrations for apps.', parents=[arg_parser_apps])
     sub_parser_add_migrations.add_argument('--relocate_south', help='Flag to relocate old South migrations from `migrations` into `south_migrations` folder.', action='store_true')
 
-    sub_parser_make_trans = sub_parsers.add_parser('make_trans', help='Creates translation (.po, .mo) files for the given languages.', parents=[arg_parser_apps])
-    sub_parser_make_trans.add_argument('locales', nargs='*', help='Locales identifiers to make localization files for. Whitespace-separated values are allowed. Example: ru, en.')
+    sub_parser_make_trans = sub_parsers.add_parser('make_trans', help='Creates translation (.po, .mo) files for the given locales.', parents=[arg_parser_apps])
+    sub_parser_make_trans.add_argument('locales', nargs='*', help='Locales identifiers to make localization files for. Whitespace-separated values are allowed. Example: ru en.')
 
     parsed_args = arg_parser.parse_args()
     parsed_args = vars(parsed_args)  # Convert args to dict
