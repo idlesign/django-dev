@@ -60,7 +60,7 @@ Making both South and Django 1.7+ migrations
 
 Use **add_migrations** command.
 
-* Relocate old South migrations into `south_migrations` and create new migrations in `migrations`:
+* Relocate old South migrations into *south_migrations* and create new migrations in *migrations*:
 
   ``> django-dev add_migrations --relocate_south``.
 
@@ -91,3 +91,13 @@ Use **make_trans** command.
 
   ``> django-dev make_trans ru --apps sitetree sitegate``.
 
+
+
+Get involved into django-dev
+----------------------------
+
+**Submit issues.** If you spotted something weird in application behavior or want to propose a feature you can do that at https://github.com/idlesign/django-dev/issues
+
+**Write code.** If you are eager to participate in application development, fork it at https://github.com/idlesign/django-dev, write your code, whether it should be a bugfix or a feature implementation, and make a pull request right from the forked project page.
+
+**Spread the word.** If you have some tips and tricks or any other words in mind that you think might be of interest for the others — publish it.
