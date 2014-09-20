@@ -60,11 +60,17 @@ Making both South and Django 1.7+ migrations
 
 Use **add_migrations** command.
 
-* Relocate old South migrations into `south_migrations` and create new migrations in `migrations`: ``> django-dev add_migrations --relocate_south``.
+* Relocate old South migrations into `south_migrations` and create new migrations in `migrations`:
 
-* Create/update migrations both for South and Django 1.7: ``> django-dev add_migrations``.
+  ``> django-dev add_migrations --relocate_south``.
 
-* Create/update migrations for certain apps: ``> django-dev add_migrations --apps sitecats siteflags``.
+* Create/update migrations both for South and Django 1.7:
+
+  ``> django-dev add_migrations``.
+
+* Create/update migrations for certain apps:
+
+  ``> django-dev add_migrations --apps sitecats siteflags``.
 
 
 
@@ -73,9 +79,15 @@ Updating translation files
 
 Use **make_trans** command.
 
-* Update existing .mo and .po files for every locale available in app: ``> django-dev make_trans``.
+* Update existing .mo and .po files for every locale available in app:
 
-* Update/create .mo and .po files for certain locales: ``> django-dev make_trans ru en``.
+  ``> django-dev make_trans``.
 
-* Update/create .mo and .po files for certain apps: ``> django-dev make_trans ru --apps sitetree sitegate``.
+* Update/create .mo and .po files for certain locales:
+
+  ``> django-dev make_trans ru en``.
+
+* Update/create .mo and .po files for certain apps:
+
+  ``> django-dev make_trans ru --apps sitetree sitegate``.
 
