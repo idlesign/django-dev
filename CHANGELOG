@@ -1,7 +1,12 @@
 django-dev changelog
 ====================
 
+
+v0.1.1
+------
+* Fixed false South initial migration add on --relocate_south.
+
+
 v0.1.0
 ------
 + Basic functionality.
-
