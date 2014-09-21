@@ -362,6 +362,7 @@ class DevTools(object):
                     self.logger.info('Relocating South migrations into %s ...' % PATH_SOUTH)
                     copytree(PATH_BUILTIN, PATH_SOUTH)
                     rmtree(PATH_BUILTIN)
+                    south_exists = True
 
                 # Add migrations for both.
                 if venv_path == default_venv_path:  # Django with migrations built-in (1.7+)
