@@ -355,6 +355,22 @@ class DevTools(object):
 
         default_venv_path = self._get_venv_path(DJANGO_DEFAULT_VERSION)
 
+        def fix_migrations(path):
+            """Fixes buggy migrations created with `makemigrations` using Py2.
+            See: https://code.djangoproject.com/ticket/23455
+
+            :param path:
+            :return:
+            """
+            self.logger.info('Fixing migrations ...')
+            for file in os.listdir(path):
+                if os.path.splitext(file)[1] == '.py':
+                    with open(os.path.join(path, file), 'r+') as f:
+                        contents = f.read()
+                        f.seek(0)
+                        f.write(contents.replace("=b'", "='"))
+                        f.truncate()
+
         for venv in venvs:
             venv_path = self._get_venv_path(venv)
 
@@ -380,6 +396,8 @@ class DevTools(object):
                     if not south_exists:
                         flag = '--init'
                     self.run_manage_command('schemamigration %s %s' % (app_name, flag), venv_path, verbose=False)
+
+                fix_migrations(PATH_BUILTIN)
 
 
 def main():
