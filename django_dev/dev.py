@@ -41,9 +41,17 @@ if __name__ == '__main__':
         south = ()
 
     from django.conf import settings, global_settings
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    )
     if not settings.configured:
         settings.configure(
-            INSTALLED_APPS=global_settings.INSTALLED_APPS + south + ('%(apps_available)s',),
+            INSTALLED_APPS=INSTALLED_APPS + south + ('%(apps_available)s',),
             DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3'}},
             MIDDLEWARE_CLASSES=global_settings.MIDDLEWARE_CLASSES,  # Prevents Django 1.7 warning.
             SOUTH_MIGRATION_MODULES = {%(south_migration_modules)s}
