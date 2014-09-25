@@ -2,6 +2,12 @@ django-dev changelog
 ====================
 
 
+v0.1.2
+------
+* Implemented buggy migrations fix for those created with `makemigrations` using Py2.
+* Added most Django contribs to installed apps into manage.py to satisfy 1.7 migrations proc.
+
+
 v0.1.1
 ------
 * Fixed false South initial migration add on --relocate_south.
