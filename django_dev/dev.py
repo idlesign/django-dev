@@ -26,6 +26,8 @@ VENVS_DIRNAME = 'venvs'
 
 
 MANAGE_PY = '''
+# This file is created automatically by django-dev.
+# Do not try to edit it. All changes manually done will be lost.
 import os
 import sys
 
@@ -234,7 +236,8 @@ class DevTools(object):
         apps = os.listdir(self.apps_path)
 
         if not apps:
-            error_str = 'Applications directory is empty. Please symlink your apps into %s' % self.apps_path
+            error_str = 'Applications directory is empty. ' \
+                        'Please symlink your apps (and other apps that you apps depend upon) into %s' % self.apps_path
             self.logger.error(error_str)
             raise DjangoDevException(error_str)
 
@@ -307,7 +310,8 @@ class DevTools(object):
         venv_path = self.make_venv('1.6.5')
         self.venv_install('south==1.0.1', venv_path)
         apps_dir = self.make_apps_dir()
-        self.logger.info('Now you may symlink (ln -s) your apps into %s' % apps_dir)
+        self.logger.info('Now you may symlink (ln -s) your apps '
+                         '(and other apps that you apps depend upon) into %s' % apps_dir)
 
     def _make_dirs(self, path):
         """Creates every directory in path as needed. Fails silently.
