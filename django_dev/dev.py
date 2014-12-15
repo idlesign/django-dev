@@ -203,7 +203,7 @@ class DevTools(object):
         """
 
         def raise_():
-            error_str = 'Virtual environments are not created run. Please run `bootstrap` command.'
+            error_str = 'Virtual environments are not created. Please run `bootstrap` command.'
             self.logger.error(error_str)
             raise DjangoDevException(error_str)
 
@@ -225,6 +225,12 @@ class DevTools(object):
         :rtype: list
         :return: list of apps names
         """
+        if not os.path.exists(self.apps_path):
+            error_str = 'It seems that this directory does not contain django-dev project. ' \
+                        'Use `bootstrap` command to create project in the current directory.'
+            self.logger.error(error_str)
+            raise DjangoDevException(error_str)
+
         apps = os.listdir(self.apps_path)
 
         if not apps:
