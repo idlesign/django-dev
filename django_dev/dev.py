@@ -299,7 +299,7 @@ class DevTools(object):
         self.logger.info('Bootstrapping django-dev directory structure in current directory ...')
         self.make_venv(DJANGO_DEFAULT_VERSION)
         venv_path = self.make_venv('1.6.5')
-        self.venv_install('south>=1.0', venv_path)
+        self.venv_install('south==1.0.1', venv_path)
         apps_dir = self.make_apps_dir()
         self.logger.info('Now you may symlink (ln -s) your apps into %s' % apps_dir)
 
