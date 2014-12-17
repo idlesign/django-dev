@@ -1,6 +1,11 @@
 django-dev changelog
 ====================
 
+v0.1.3
+------
+* Fixed south install stdout redirect.
++ Added user-friendly error messages for console commands.
+
 
 v0.1.2
 ------
