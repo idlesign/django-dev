@@ -1,6 +1,11 @@
 django-dev changelog
 ====================
 
+Unreleased
+----------
+* Fixed `add_migrations` with `--relocate_south` flag unable to delete `migrations` dir.
+
+
 v0.1.3
 ------
 * Fixed south install stdout redirect.

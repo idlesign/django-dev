@@ -407,7 +407,8 @@ class DevTools(object):
                         flag = '--init'
                     self.run_manage_command('schemamigration %s %s' % (app_name, flag), venv_path, verbose=False)
 
-                fix_migrations(PATH_BUILTIN)
+                if os.path.exists(PATH_BUILTIN):
+                    fix_migrations(PATH_BUILTIN)
 
 
 def main():
