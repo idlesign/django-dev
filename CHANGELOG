@@ -1,8 +1,8 @@
 django-dev changelog
 ====================
 
-Unreleased
-----------
+v0.1.4
+------
 * Fixed `add_migrations` with `--relocate_south` flag unable to delete `migrations` dir.
 
 
