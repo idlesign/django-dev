@@ -50,6 +50,8 @@ if __name__ == '__main__':
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.sites',
+        'django.contrib.flatpages',
     )
     if not settings.configured:
         settings.configure(
