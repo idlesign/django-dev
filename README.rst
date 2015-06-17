@@ -2,11 +2,14 @@ django-dev
 ==========
 https://github.com/idlesign/django-dev
 
-.. image:: https://badge.fury.io/py/django-dev.png
-    :target: http://badge.fury.io/py/django-dev
+.. image:: https://img.shields.io/pypi/v/django-dev.svg
+    :target: https://pypi.python.org/pypi/django-dev
 
-.. image:: https://pypip.in/d/django-dev/badge.png
-        :target: https://crate.io/packages/django-dev
+.. image:: https://img.shields.io/pypi/dm/django-dev.svg
+    :target: https://pypi.python.org/pypi/django-dev
+
+.. image:: https://img.shields.io/pypi/l/django-dev.svg
+    :target: https://pypi.python.org/pypi/django-dev
 
 
 Description
