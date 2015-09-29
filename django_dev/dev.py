@@ -42,6 +42,9 @@ if __name__ == '__main__':
     except:
         south = ()
 
+    from django import get_version
+    print('* Django: {}'.format(get_version()))
+
     from django.conf import settings, global_settings
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -86,7 +89,7 @@ class DevTools(object):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.configure_logging(log_level)
 
-    def configure_logging(self, verbosity_lvl=None, format='DJANGO DEV %(levelname)s: %(message)s'):
+    def configure_logging(self, verbosity_lvl=None, format='%(message)s'):
         """Switches on logging at a given level.
 
         :param verbosity_lvl:
@@ -143,7 +146,9 @@ class DevTools(object):
         :param bool verbose:
         """
         self.logger.debug('Running manage command `%s` for `%s` ...' % (command, venv_path))
-        self._run_shell_command('. %s/bin/activate && python %s %s' % (venv_path, self._get_manage_py_path(), command), pipe_it=(not verbose))
+        self._run_shell_command(
+            '. %s/bin/activate && python %s %s' % (venv_path, self._get_manage_py_path(), command),
+            pipe_it=(not verbose))
 
     def venv_install(self, package_name, venv_path):
         """Installs a given python package into a given virtual environment.
@@ -343,7 +348,7 @@ class DevTools(object):
             locales = []
 
         for app_name in apps:
-            self.logger.info('For `%s` application ...' % app_name)
+            self.logger.info('Application: %s' % app_name)
             app_path = self._get_app_path(app_name)
             locales_path = os.path.join(app_path, 'locale')
 
@@ -351,7 +356,7 @@ class DevTools(object):
                 locales = os.listdir(locales_path)
 
             for lang in locales:
-                self.logger.info('Working on `%s` locale ...' % lang)
+                self.logger.info('Locale: %s' % lang)
                 locale_path = os.path.join(locales_path, '%s/LC_MESSAGES' % lang)
                 self._make_dirs(locale_path)
                 old_wd = os.getcwd()
@@ -374,7 +379,7 @@ class DevTools(object):
             :param path:
             :return:
             """
-            self.logger.info('Fixing migrations ...')
+            self.logger.debug('Fixing migrations ...')
             for file in os.listdir(path):
                 if os.path.splitext(file)[1] == '.py':
                     with open(os.path.join(path, file), 'r+') as f:
@@ -383,6 +388,7 @@ class DevTools(object):
                         f.write(contents.replace("=b'", "='"))
                         f.truncate()
 
+        last_app_name = None
         for venv in venvs:
             venv_path = self._get_venv_path(venv)
 
@@ -392,7 +398,9 @@ class DevTools(object):
                 PATH_BUILTIN = os.path.join(app_path, 'migrations')
                 south_exists = os.path.exists(PATH_SOUTH)
 
-                self.logger.info('For `%s` application in `%s` ...' % (app_name, venv_path))
+                if last_app_name != app_name:
+                    self.logger.info('Application: %s' % app_name)
+                    last_app_name = app_name
 
                 if relocate_south and not south_exists and os.path.exists(PATH_BUILTIN):  # Foolproof.
                     self.logger.info('Relocating South migrations into %s ...' % PATH_SOUTH)
@@ -402,35 +410,45 @@ class DevTools(object):
 
                 # Add migrations for both.
                 if venv_path == default_venv_path:  # Django with migrations built-in (1.7+)
-                    self.run_manage_command('makemigrations %s' % app_name, venv_path, verbose=False)
+                    self.run_manage_command('makemigrations %s' % app_name, venv_path)
+
                 else:
-                    flag = '--auto'
-                    if not south_exists:
-                        flag = '--init'
-                    self.run_manage_command('schemamigration %s %s' % (app_name, flag), venv_path, verbose=False)
+                    flag = '--auto' if south_exists else '--initial'
+                    self.run_manage_command('schemamigration %s %s' % (app_name, flag), venv_path)
 
                 if os.path.exists(PATH_BUILTIN):
                     fix_migrations(PATH_BUILTIN)
 
 
 def main():
-    arg_parser = argparse.ArgumentParser(prog='django-dev', description='Tools to facilitate application development for Django', version='.'.join(map(str, VERSION)))
+    arg_parser = argparse.ArgumentParser(
+        prog='django-dev', description='Tools to facilitate application development for Django',
+        version='.'.join(map(str, VERSION)))
 
     arg_parser.add_argument('--debug', help='Show debug messages while processing', action='store_true')
 
     arg_parser_apps = argparse.ArgumentParser(add_help=False)
-    arg_parser_apps.add_argument('--apps', nargs='+', help='Whitespace-separated list of applications names. Example: sitecats, siteflags.')
+    arg_parser_apps.add_argument(
+        '--apps', nargs='+', help='Whitespace-separated list of applications names. Example: sitecats, siteflags.')
 
     sub_parsers = arg_parser.add_subparsers(dest='subparser_name')
     sub_parsers.add_parser('bootstrap', help='Creates a basic django-dev directory structure in a current directory.')
     sub_parsers.add_parser('list_apps', help='Prints out currently available applications.')
     sub_parsers.add_parser('list_venvs', help='Prints out currently available virtual environments.')
 
-    sub_parser_add_migrations = sub_parsers.add_parser('add_migrations', help='Adds both South and Django 1.7+ migrations for apps.', parents=[arg_parser_apps])
-    sub_parser_add_migrations.add_argument('--relocate_south', help='Flag to relocate old South migrations from `migrations` into `south_migrations` folder.', action='store_true')
+    sub_parser_add_migrations = sub_parsers.add_parser(
+        'add_migrations', help='Adds both South and Django 1.7+ migrations for apps.', parents=[arg_parser_apps])
+    sub_parser_add_migrations.add_argument(
+        '--relocate_south',
+        help='Flag to relocate old South migrations from `migrations` into `south_migrations` folder.',
+        action='store_true')
 
-    sub_parser_make_trans = sub_parsers.add_parser('make_trans', help='Creates translation (.po, .mo) files for the given locales.', parents=[arg_parser_apps])
-    sub_parser_make_trans.add_argument('locales', nargs='*', help='Locales identifiers to make localization files for. Whitespace-separated values are allowed. Example: ru en.')
+    sub_parser_make_trans = sub_parsers.add_parser(
+        'make_trans', help='Creates translation (.po, .mo) files for the given locales.', parents=[arg_parser_apps])
+    sub_parser_make_trans.add_argument(
+        'locales', nargs='*',
+        help='Locales identifiers to make localization files for. Whitespace-separated values are allowed. '
+             'Example: ru en.')
 
     parsed_args = arg_parser.parse_args()
     parsed_args = vars(parsed_args)  # Convert args to dict
