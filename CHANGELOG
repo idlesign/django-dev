@@ -1,6 +1,11 @@
 django-dev changelog
 ====================
 
+Unreleased
+----------
+* Default Django version is bumped up to 1.8.
+
+
 v0.1.4
 ------
 * Fixed `add_migrations` with `--relocate_south` flag unable to delete `migrations` dir.
