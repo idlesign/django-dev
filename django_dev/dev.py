@@ -20,7 +20,7 @@ from . import VERSION
 
 
 DIR_CURRENT = os.getcwd()
-DJANGO_DEFAULT_VERSION = '1.7'
+DJANGO_DEFAULT_VERSION = '1.8'
 APPS_DIRNAME = 'apps'
 VENVS_DIRNAME = 'venvs'
 
