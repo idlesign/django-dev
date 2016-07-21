@@ -34,6 +34,8 @@ Supported commands:
 
 * **list_venvs**
 
+* **install_package**
+
 
 
 Requirements

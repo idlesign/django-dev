@@ -334,6 +334,19 @@ class DevTools(object):
             pass
         return False
 
+    def op_install_package(self, names):
+        """Install packages into virtual envs as to satisfy app requirements.
+
+        Exact version numbers could be given as in PIP: somedep==1.5
+
+        :param list names:
+
+        """
+        venvs = self.get_venvs()
+        for venv in venvs:
+            for name in names:
+                self.venv_install(name, self._get_venv_path(venv))
+
     def op_make_trans(self, locales=None, apps=None):
         """Generates/updates localization (.po, .mo) files for applications.
 
@@ -449,6 +462,13 @@ def main():
         'locales', nargs='*',
         help='Locales identifiers to make localization files for. Whitespace-separated values are allowed. '
              'Example: ru en.')
+
+    sub_parser_install_package = sub_parsers.add_parser(
+        'install_package', help='Installs packages into virtual environments.')
+    sub_parser_install_package.add_argument(
+        'names', nargs='*',
+        help='Package names to install. Exact version number could be supplied as for PIP: some_package==1.2.3 '
+             'Whitespace-separated values are allowed.')
 
     parsed_args = arg_parser.parse_args()
     parsed_args = vars(parsed_args)  # Convert args to dict
