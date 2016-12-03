@@ -1,6 +1,12 @@
 django-dev changelog
 ====================
 
+
+v0.2.1
+------
+* Fixed `unexpected keyword argument 'version'` for Py3.
+
+
 v0.2.0
 ------
 + Added `install_package` command.

@@ -435,9 +435,9 @@ class DevTools(object):
 
 def main():
     arg_parser = argparse.ArgumentParser(
-        prog='django-dev', description='Tools to facilitate application development for Django',
-        version='.'.join(map(str, VERSION)))
+        prog='django-dev', description='Tools to facilitate application development for Django')
 
+    arg_parser.add_argument('--version', action='version', version='.'.join(map(str, VERSION)))
     arg_parser.add_argument('--debug', help='Show debug messages while processing', action='store_true')
 
     arg_parser_apps = argparse.ArgumentParser(add_help=False)
