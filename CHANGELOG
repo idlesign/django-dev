@@ -1,8 +1,8 @@
 django-dev changelog
 ====================
 
-Unreleased
-----------
+v0.2.0
+------
 + Added `install_package` command.
 * Default Django version is bumped up to 1.8.
 
