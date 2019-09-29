@@ -12,6 +12,11 @@ https://github.com/idlesign/django-dev
     :target: https://pypi.python.org/pypi/django-dev
 
 
+Legacy
+------
+**This project is closed. Thanks for watching us.**
+
+
 Description
 -----------
 
